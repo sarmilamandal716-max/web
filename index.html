@@ -1,0 +1,380 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZNO | IPL 2026 Futuristic Fan Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00f2ff;
+            --neon-purple: #bc13fe;
+            --dark-bg: #0a0a0c;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--dark-bg);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- BACKGROUND MOTION --- */
+        .bg-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--neon-purple) 0%, transparent 70%);
+            filter: blur(80px);
+            opacity: 0.2;
+            z-index: -1;
+            animation: moveGlow 15s infinite alternate;
+        }
+
+        @keyframes moveGlow {
+            from { top: 0; left: 0; }
+            to { top: 80vh; left: 80vw; }
+        }
+
+        /* --- HEADER SECTION --- */
+        .top-banner {
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            color: black;
+            text-align: center;
+            padding: 5px;
+            font-weight: bold;
+            font-family: 'Orbitron';
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo-container {
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .logo-zno {
+            font-family: 'Orbitron';
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(to bottom, #fff, var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+        }
+
+        .sub-logo {
+            letter-spacing: 5px;
+            color: var(--neon-purple);
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        /* --- SECTIONS --- */
+        section { padding: 60px 10%; opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
+        section.visible { opacity: 1; transform: translateY(0); }
+
+        .section-title {
+            font-family: 'Orbitron';
+            margin-bottom: 40px;
+            border-left: 5px solid var(--neon-blue);
+            padding-left: 15px;
+        }
+
+        /* --- LIVE SCORECARD --- */
+        .scorecard {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            flex-wrap: wrap;
+        }
+
+        .team-live { text-align: center; }
+        .team-live img { width: 80px; filter: drop-shadow(0 0 10px var(--neon-blue)); }
+        .vs { font-family: 'Orbitron'; font-size: 2rem; color: var(--neon-purple); }
+
+        /* --- TEAM GRID --- */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .team-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .team-card:hover {
+            transform: scale(1.05) translateY(-10px);
+            border-color: var(--neon-blue);
+            background: rgba(0, 242, 255, 0.05);
+        }
+
+        .team-card img { width: 60px; margin-bottom: 10px; }
+
+        /* --- GAME SECTION --- */
+        #game-container {
+            background: #000;
+            border: 2px solid var(--neon-purple);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        canvas { display: block; width: 100%; height: 400px; }
+        .game-ui { position: absolute; top: 10px; left: 10px; font-family: 'Orbitron'; color: var(--neon-blue); }
+
+        /* --- LOGIN & EXCLUSIVE --- */
+        .login-box {
+            max-width: 400px;
+            margin: auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--neon-blue);
+            color: white;
+            border-radius: 5px;
+        }
+
+        .btn-neon {
+            background: transparent;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 10px 25px;
+            font-family: 'Orbitron';
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-neon:hover {
+            background: var(--neon-blue);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        /* --- ADS PLACEHOLDERS --- */
+        .ad-banner {
+            width: 100%;
+            height: 90px;
+            background: rgba(255,255,255,0.02);
+            border: 1px dashed #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 40px 0;
+            color: #555;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* --- HIDDEN FEATURES --- */
+        #exclusive-content { display: none; }
+
+        @media (max-width: 768px) {
+            .scorecard { flex-direction: column; gap: 20px; }
+            .logo-zno { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+    <div class="top-banner">THIS WEBSITE WILL GO LIVE SOON</div>
+
+    <header>
+        <div class="logo-container">
+            <div class="logo-zno">ZNO</div>
+            <div class="sub-logo">Shubhajit Sarkar</div>
+        </div>
+    </header>
+
+    <section id="scores">
+        <h2 class="section-title">LIVE ACTION 2026</h2>
+        <div class="scorecard">
+            <div class="team-live">
+                <img src="https://via.placeholder.com/80/00f2ff?text=KKR" alt="KKR">
+                <h3>KKR</h3>
+                <p>184/4 (18.2)</p>
+            </div>
+            <div class="vs">VS</div>
+            <div class="team-live">
+                <img src="https://via.placeholder.com/80/bc13fe?text=MI" alt="MI">
+                <h3>MI</h3>
+                <p>Yet to Bat</p>
+            </div>
+            <div style="width: 100%; text-align: center; margin-top: 20px;">
+                <a href="https://www.iplt20.com" target="_blank" class="btn-neon">BUY TICKETS NOW</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="teams">
+        <h2 class="section-title">IPL 2026 CONTENDERS</h2>
+        <div class="team-grid" id="teamGrid">
+            </div>
+    </section>
+
+    <div class="ad-banner">ADVERTISEMENT - RESPONSIVE BANNER</div>
+
+    <section id="game">
+        <h2 class="section-title">MINI CRICKET CHALLENGE</h2>
+        <p style="margin-bottom: 15px;">Press [SPACE] to Swing the Bat! Hit the glowing orbs!</p>
+        <div id="game-container">
+            <div class="game-ui">RUNS: <span id="run-count">0</span></div>
+            <canvas id="cricketGame"></canvas>
+        </div>
+    </section>
+
+    <section id="fan-zone">
+        <h2 class="section-title">EXCLUSIVE FAN ZONE</h2>
+        
+        <div id="login-section" class="login-box">
+            <h3>Login to Unlock Rewards</h3>
+            <input type="email" id="email" placeholder="Email Address">
+            <input type="password" placeholder="Password">
+            <button class="btn-neon" onclick="handleLogin()">ENTER HUB</button>
+        </div>
+
+        <div id="exclusive-content">
+            <div class="team-grid">
+                <div class="team-card"><h3>🏆 Leaderboard</h3><p>Rank: #402</p></div>
+                <div class="team-card"><h3>🔮 Predictor</h3><p>Win 2x Points</p></div>
+                <div class="team-card"><h3>💎 Trophy Room</h3><p>3 Unlocked</p></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="ad-banner">ADVERTISEMENT - SIDEBAR PLACEHOLDER</div>
+
+    <script>
+        // --- 1. TEAM DATA INJECTION ---
+        const teams = ['CSK', 'MI', 'RCB', 'KKR', 'GT', 'LSG', 'RR', 'DC', 'PBKS', 'SRH'];
+        const grid = document.getElementById('teamGrid');
+        
+        teams.forEach(team => {
+            const card = document.createElement('div');
+            card.className = 'team-card';
+            card.innerHTML = `
+                <img src="https://via.placeholder.com/60/00f2ff?text=${team}" alt="${team}">
+                <h4>${team}</h4>
+            `;
+            grid.appendChild(card);
+        });
+
+        // --- 2. SCROLL REVEAL ANIMATION ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(s => observer.observe(s));
+
+        // --- 3. LOGIN LOGIC ---
+        function handleLogin() {
+            const email = document.getElementById('email').value;
+            if(email.includes('@')) {
+                localStorage.setItem('zno_user', email);
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('exclusive-content').style.display = 'block';
+                alert('Welcome back, Captain!');
+            } else {
+                alert('Enter a valid futuristic ID (Email)');
+            }
+        }
+
+        // --- 4. 2D MINI GAME ENGINE ---
+        const canvas = document.getElementById('cricketGame');
+        const ctx = canvas.getContext('2d');
+        let score = 0;
+        let ballX = 800, ballY = 200, ballSpeed = 5;
+        let isSwinging = false;
+
+        function drawGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw Pitch
+            ctx.fillStyle = '#1a1a1a';
+            ctx.fillRect(0, 350, 800, 50);
+
+            // Draw Bat (Player)
+            ctx.fillStyle = isSwinging ? '#bc13fe' : '#00f2ff';
+            ctx.fillRect(50, isSwinging ? 150 : 250, 20, 100);
+
+            // Draw Ball
+            ctx.beginPath();
+            ctx.arc(ballX, ballY, 10, 0, Math.PI*2);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = '#00f2ff';
+
+            // Logic
+            ballX -= ballSpeed;
+
+            // Collision Detection
+            if (ballX < 70 && ballX > 30 && isSwinging) {
+                score += 4;
+                document.getElementById('run-count').innerText = score;
+                resetBall();
+            }
+
+            if (ballX < 0) resetBall();
+
+            requestAnimationFrame(drawGame);
+        }
+
+        function resetBall() {
+            ballX = 800;
+            ballY = 200 + Math.random() * 100;
+            ballSpeed = 5 + Math.random() * 5;
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if(e.code === 'Space') {
+                isSwinging = true;
+                setTimeout(() => isSwinging = false, 150);
+            }
+        });
+
+        drawGame();
+    </script>
+</body>
+</html>
